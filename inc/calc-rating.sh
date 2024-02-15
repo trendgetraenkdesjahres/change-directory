@@ -17,10 +17,10 @@ get_new_rating() {
     local last_time_cd=$2
 
     local date_multiplier multiplier result
-    date_multiplier=$(rating::get_date_value "$last_time_cd")
+    date_multiplier=$(path_rating::date_value "$last_time_cd")
 
     # scale the multiplier to the old_rating
-    multiplier=$(rating::get_scaled_multiplier "$old_rating" "$date_multiplier")
+    multiplier=$(path_rating::get_factor "$old_rating" "$date_multiplier")
 
     # integer new value, calculated by old value and manipulated multiplier
     result=$(printf "%.0f\n" "$(echo "scale=0; $old_rating * $multiplier" | bc)")
@@ -33,7 +33,7 @@ get_new_rating() {
 }
 
 #######################################
-# get_date_value
+# date_value
 # Description:
 #   Calculate a float value relative to the time difference to the current moment.
 # Arguments:
@@ -43,7 +43,7 @@ get_new_rating() {
 # Returns:
 #   None
 #######################################
-rating::get_date_value() {
+path_rating::date_value() {
     # the timestamp we want a representation of
     local timestamp=$1
 
@@ -77,7 +77,7 @@ rating::get_date_value() {
 }
 
 #######################################
-# get_scaled_multiplier
+# get_factor
 # Description:
 #   Calculate a float value relative to the second parameter (0-100).
 # Arguments:
@@ -88,7 +88,7 @@ rating::get_date_value() {
 # Returns:
 #   None
 #######################################
-rating::get_scaled_multiplier() {
+path_rating::get_factor() {
     # the value is between 0 and 100
     local value=$1
     # the multiplier we want to change relative to the value
