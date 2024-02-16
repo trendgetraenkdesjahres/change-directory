@@ -17,44 +17,47 @@ alias cd='change-directory'
 # Returns:
 #   None
 #######################################
+
+# In main-file.zsh
+
 function change-directory() {
-    source functions/update_path_info.sh
-    source functions/get_new_rating.sh
+  source functions/directory.sh
+  source functions/rating.sh
 
-    local flags return_path
+  local flags return_path
 
-    # get the options
-    while getopts "PL" opt; do
-        case $opt in
-        L) flags+=('logical') ;;
-        P) flags+=('physical') ;;
-        ?) echo "($0): Ein Fehler bei der Optionsangabe" ;;
-        esac
-    done
+  # get the options
+  while getopts "PL" opt; do
+    case $opt in
+    L) flags+=('logical') ;;
+    P) flags+=('physical') ;;
+    ?) echo "($0): Ein Fehler bei der Optionsangabe" ;;
+    esac
+  done
 
-    # shift the arguments to remove the flags
-    if [ "${flags[*]}" ]; then
-        shift
-    fi
+  # shift the arguments to remove the flags
+  if [ "${flags[*]}" ]; then
+    shift
+  fi
 
-    # it the first argument contains slashes, the input is considered a path. any other argument will be ignored
-    if [[ "$1" == *"/"* ]]; then
-        return_path="$1"
+  # it the first argument contains slashes, the input is considered a path. any other argument will be ignored
+  if [[ "$1" == *"/"* ]]; then
+    return_path="$1"
 
-    # if there is a second argument, the inputs are considered tokens
-    elif [ "$2" ]; then
-        return_path=$(get_path "$@")
+  # if there is a second argument, the inputs are considered tokens
+  elif [ "$2" ]; then
+    return_path=$(get_path "$@")
 
-    # it the first argument is not in this directory, the input is considered a token
-    elif [ ! -e "$1" ]; then
-        return_path=$(get_path "$1")
+  # it the first argument is not in this directory, the input is considered a token
+  elif [ ! -e "$1" ]; then
+    return_path=$(get_path "$1")
 
-    # default, run cd
-    else
-        return_path="$1"
-    fi
+  # default, run cd
+  else
+    return_path="$1"
+  fi
+  # execute build-in cd with calculated path and update the information about the path or forget the info about the path on fail
+  \cd "$return_path" && directory::update "$return_path" || directory::forget "$return_path"
 
-    \cd "$return_path" && update_path_info "$return_path"
-
-    echo "Now in: $(pwd)"
+  echo "Now in: $(pwd)"
 }
