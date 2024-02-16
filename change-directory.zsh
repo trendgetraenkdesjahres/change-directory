@@ -1,4 +1,7 @@
 alias cd='change-directory'
+source "${0:A:h}/functions/directory.zsh"
+source "${0:A:h}/functions/rating.zsh"
+source "${0:A:h}/init.zsh"
 #######################################
 # change-directory
 # Description:
@@ -21,17 +24,16 @@ alias cd='change-directory'
 # In main-file.zsh
 
 function change-directory() {
-  source functions/directory.sh
-  source functions/rating.sh
-
-  local flags return_path
+  change-directory::init
+  local flags abs_path
 
   # get the options
-  while getopts "PL" opt; do
+  while getopts "hPL" opt; do
     case $opt in
+    h) change-directory::show_help && return 0 ;;
     L) flags+=('logical') ;;
     P) flags+=('physical') ;;
-    ?) echo "($0): Ein Fehler bei der Optionsangabe" ;;
+    ?) echo "($0): Invalid Option.\n" $(change-directory::show_help) ;;
     esac
   done
 
@@ -42,22 +44,34 @@ function change-directory() {
 
   # it the first argument contains slashes, the input is considered a path. any other argument will be ignored
   if [[ "$1" == *"/"* ]]; then
-    return_path="$1"
+    abs_path="$(directory::realpath $1)"
 
   # if there is a second argument, the inputs are considered tokens
   elif [ "$2" ]; then
-    return_path=$(get_path "$@")
+    abs_path=$(get_path "$@")
 
-  # it the first argument is not in this directory, the input is considered a token
+  # it the first argument is not in this directory, the input is considered a token ???
   elif [ ! -e "$1" ]; then
-    return_path=$(get_path "$1")
+    abs_path=$(get_path "$1")
 
-  # default, run cd
+  # default
   else
-    return_path="$1"
+    abs_path="$(directory::realpath $1)"
   fi
   # execute build-in cd with calculated path and update the information about the path or forget the info about the path on fail
-  \cd "$return_path" && directory::update "$return_path" || directory::forget "$return_path"
+  \cd "$abs_path" && directory::update "$abs_path" || directory::forget "$abs_path"
 
   echo "Now in: $(pwd)"
+}
+
+function change-directory::show_help() {
+  echo "Usage: change-directory [OPTIONS] [PATH]"
+  echo "Change the current working directory based on specified options and arguments."
+  echo "Options:"
+  echo "  -h, --help    Show this help message."
+  echo "  -L            Change the logical working directory."
+  echo "  -P            Change the physical working directory."
+  echo "Arguments:"
+  echo "  PATH          If it contains slashes, it is considered a path. If not, it is considered as token."
+  echo "                If there are multiple arguments, they are considered as tokens for constructing a path."
 }
