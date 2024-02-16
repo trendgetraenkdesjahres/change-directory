@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #######################################
 # get_new_rating
 # Description:

@@ -1,6 +1,4 @@
-#!/bin/bash
 alias cd='change-directory'
-
 #######################################
 # change-directory
 # Description:
@@ -20,7 +18,8 @@ alias cd='change-directory'
 #   None
 #######################################
 function change-directory() {
-    source functions/update_path_info.zsh
+    source functions/update_path_info.sh
+    source functions/get_new_rating.sh
 
     local flags return_path
 
