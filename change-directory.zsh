@@ -1,6 +1,7 @@
 alias cd='change-directory'
 source "${0:A:h}/functions/directory.zsh"
 source "${0:A:h}/functions/rating.zsh"
+source "${0:A:h}/functions/proposal.zsh"
 source "${0:A:h}/init.zsh"
 #######################################
 # change-directory
@@ -48,11 +49,12 @@ function change-directory() {
 
   # if there is a second argument, the inputs are considered tokens
   elif [ "$2" ]; then
-    abs_path=$(get_path "$@")
+    local tokens=$@
+    abs_path=$(proposal::get $tokens)
 
   # it the first argument is not in this directory, the input is considered a token ???
   elif [ ! -e "$1" ]; then
-    abs_path=$(get_path "$1")
+    abs_path=$(proposal::get "$1")
 
   # default
   else
