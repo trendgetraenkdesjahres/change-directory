@@ -1,12 +1,11 @@
 function proposal::get() {
+  typeset -r _directory_file="${HOME}/.cache/zsh-cd-history"
   # get the tokens param
   local tokens=()
   read -r -A tokens <<<"$1"
 
   # current working dir
   local current_location=$(pwd)
-  # TODO consider that the last token might be unknown yet.
-  # TODO early returns
 
   # regex
   regex=$(

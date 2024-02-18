@@ -9,6 +9,7 @@
 #   None
 #######################################
 directory::update() {
+  typeset -r _directory_file="${HOME}/.cache/zsh-cd-history"
   # declaring readonlys for the desired directory
   typeset -r directory="$1"
 
@@ -50,6 +51,7 @@ directory::update() {
 #   None
 #######################################
 directory::forget() {
+  typeset -r _directory_file="${HOME}/.cache/zsh-cd-history"
   # declaring readonlys for the desired directory
   typeset -r directory="$1"
 

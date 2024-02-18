@@ -22,7 +22,15 @@ source "${0:A:h}/init.zsh"
 #   None
 #######################################
 
-# In main-file.zsh
+# TODO was passiert hier?
+# tower22win:plugins (version2*) $ cd fabian .cache
+# cd: no such file or directory: /home/.cache/.oh-my-zsh-custom/plugins
+# TODO was passiert hier?
+# tower22win:/var $ cd home fabian
+# cd: string not in pwd: home
+# TODO wenn als plugin geladen geht die pfad nicht
+# TODO wieso gab es einen leeren pfad in der datei?
+# TODO logik bei nur einem token - wann automatik, wann fehler?
 
 function change-directory() {
   change-directory::init
