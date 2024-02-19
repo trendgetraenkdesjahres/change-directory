@@ -1,4 +1,3 @@
-#!/bin/bash
 set -e
 
 if [ -d "$ZSH_CUSTOM" ]; then
