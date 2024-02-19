@@ -36,14 +36,14 @@ cd [OPTION] [DIRECTORY/Token] ...[optional: Token]
 the ability of this plugin is to suggest directories based on your usage history. When providing partial directory names or tokens, the plugin suggests the most relevant directories. To use this feature, add a second word to your cd command. Now the command is considering the words as tokens, and not as path.
 
 ### Current Directory is Prioritized
-- **Current Directory Suggestions:** If you provide only tokens (subdirectory names or just parts of them), the plugin suggests directories starting from the current working directory that match the provided tokens.
-- **Global Suggestions:*** If the current directory does not match, the plugin looks for suggestions globally, considering all directories.
+- **Current Directory Suggestions:** If you provide only tokens (full directory names or just parts of them), the plugin suggests directories, which are within the current directory and that match the provided tokens.
+- **Global Suggestions:*** If the current directory does not match, the plugin looks for directories that match the provided tokens globally.
 
 ### Complete Directory Names are Prioritized
-If the last token matches the a directory name Completely, it is prioritized.
+If the last token matches the directory name completely, it is prioritized.
 
 ### Priority by frequency and recency
-If multiple paths that match your search items, the plugin will consider the frequency and the recency of the last time cd'ing there.
+If multiple paths match your search tokens, the plugin will consider the frequency and the recency of the last time cd'ing there.
 
 ### Examples:
 ```bash
@@ -57,8 +57,8 @@ cd proj wordpress
 will change your working directory to '/home/gilber/git-projects/wordpress'. The string 'proj' is imcomplete, but that is okay.
 
 #### how does it work?
-The plugin creates a file in where it stores the history of cd-operations.
-Each entry contains the path, the path rating and the list time cd'ing there.
+The plugin creates a file in which it stores the history of cd-operations.
+Each entry contains the path, the path rating and the last time cd'ing there.
 - it creates a new entry if the directory is not stored inside yet
 - it updates the rating (relativ to the current rating and the last time cd'ing there)
 - it deleted the entry if the cd was not succesfull (when the direcory is inaccessible)
