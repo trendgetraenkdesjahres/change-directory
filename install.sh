@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [ -n "$ZSH_CUSTOM" ]; then
   INSTALL_DIR="$ZSH_CUSTOM/plugins/change-directory"
