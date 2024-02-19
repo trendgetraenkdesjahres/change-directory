@@ -34,7 +34,7 @@ function change-directory() {
     P=physical ||
     return 1
   print "logical: $logical, physical: $physical\n"
-  if [ ! -z "$help_flag" ]; then
+  if [ -n "$help_flag" ]; then
     change-directory::show_help
     return 0
   fi
