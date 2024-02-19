@@ -24,19 +24,26 @@ source "${0:A:h}/init.zsh"
 
 function change-directory() {
   change-directory::init
-  local help_flag abs_path
+  local help_flag list_flag abs_path
 
   zmodload zsh/zutil
   zparseopts -D -F -K -- \
     {h,-help}=help_flag \
     {c,-config}:=configuration \
+    {l,-list}=list_flag \
     L=logical \
     P=physical ||
     return 1
+
   if [ -n "$help_flag" ]; then
-    change-directory::show_help
-    return 0
+    return $(change-directory::show_help)
   fi
+
+  # show the list of directories, search by tokens
+  if [ -n "$list_flag" ]; then
+    return $(directory::show_list "$tokens")
+  fi
+  local tokens=$@
 
   # it the first argument contains slashes, the input is considered a path. any other argument will be ignored
   if [[ "$1" == *"/"* ]]; then
@@ -44,7 +51,6 @@ function change-directory() {
 
   # if there is a second argument, the inputs are considered tokens
   elif [ "$2" ]; then
-    local tokens=$@
     abs_path=$(proposal::get $tokens)
 
   # it the first argument is not in this directory, the input is considered a token ???

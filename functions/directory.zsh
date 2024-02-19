@@ -74,3 +74,22 @@ directory::realpath() {
   typeset -r directory="$(readlink -f "$1")"
   echo $directory
 }
+
+directory::show_list() {
+  typeset -r _directory_file="${HOME}/.cache/zsh-cd-history"
+  local tokens=($1)
+
+  # no argument, show whole file
+  if [[ -z $tokens ]]; then
+    echo $(sort -k2 -nr "$_directory_file" | column -t -s ' ')
+    return 0
+  fi
+
+  # get matches starting of globally and sort by rating
+  list=$(grep -E --color=always "${tokens[*]}" "${_directory_file}" | sort -k2 -nr | column -t -s ' ')
+  if [[ -n ${list} ]]; then
+    echo "$from_root_dir" | awk 'NR==1 {print $1}'
+    return 0
+  fi
+  return 1
+}
