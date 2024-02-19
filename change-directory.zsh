@@ -2,6 +2,7 @@ alias cd='change-directory'
 source "${0:A:h}/functions/directory.zsh"
 source "${0:A:h}/functions/rating.zsh"
 source "${0:A:h}/functions/proposal.zsh"
+source "${0:A:h}/debug.zsh"
 source "${0:A:h}/init.zsh"
 #######################################
 # change-directory
@@ -31,6 +32,7 @@ function change-directory() {
     {h,-help}=help_flag \
     {c,-config}:=configuration \
     {l,-list}=list_flag \
+    {v,-verbose}=verbose \
     L=logical \
     P=physical ||
     return 1
