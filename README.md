@@ -5,12 +5,12 @@ This Zsh plugin, **`change-directory`**, enhances the built-in cd command by sma
 ### Using Curl
 To install the **`change-directory`** plugin, you can use the following one-liner with **`curl`**:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/trendgetraenkdesjahres/change-directory/main/install.zsh | zsh
+curl -fsSL https://raw.githubusercontent.com/change-directory/main/install.zsh | zsh
 ```
 ### Manual Installation
 Alternatively, you can clone the repository manually to your zsh plugins directory:
 ```bash
-git clone https://github.com/your-username/change-directory-plugin.git
+git clone https://github.com/trendgetraenkdesjahres/change-directory.git
 ```
 Then, add **`change-directory`** to the plugins list in your **`~/.zshrc`** file:
 ```bash
