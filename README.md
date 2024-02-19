@@ -84,4 +84,3 @@ The development of this plugin was a code challenge and an exercise in learning 
 If you're interested in contributing, providing feedback, or submitting merge requests to help improve the plugin, please feel free to do so. Your input is highly appreciated.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
