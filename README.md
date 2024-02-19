@@ -69,14 +69,16 @@ Each entry contains the path, the path rating and the last time cd'ing there.
 `-h`: Display help and exit.
 
 # Agenda
-[] when loaded as a plugin, the _directory_file variable doesn't work.
-[] why was there an empty path in the file?
-[] "cd" should lead to home.
-[] logic for only one token - when proposal, when error?
-[] improve "Now in: $dir" message, possibly with ls?
-[] config-file/ config option/ flag
-[] if more than one token, should proposal also actively search for paths if nothing is found in the _directory_file?
-[] zsh completion
+ -  [] when loaded as a plugin, the _directory_file variable doesn't work.
+ -  [] why was there an empty path in the file?
+ -  [] "cd" should lead to home.
+ -  [] logic for only one token - when proposal, when error?
+ -  [] improve "Now in: $dir" message, possibly with ls?
+ -  [] config-file/ config option/ flag
+ -  [] show history list
+ -  [] verbose mode
+ -  [] if more than one token, should proposal also actively search for paths if nothing is found in the _directory_file?
+ -  [] zsh completion
 
 # About
 The development of this plugin was a code challenge and an exercise in learning more about writing bash/zsh scripts. The plugin drew inspiration from [Zsh-z]([text](https://github.com/agkozak/zsh-z)), a tool I admired even though I never used it. I was initially hesitant to tinker with the cd command, but I wanted to try implementing a similar concept myself.
