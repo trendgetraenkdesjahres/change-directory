@@ -28,6 +28,9 @@ The change-directory plugin adds a suggestion functionality to the cd command in
 - `-h`: Show help message.
 - `-L`: Change the logical working directory.
 - `-P`: Change the physical working directory.
+```bash
+cd [OPTION] [DIRECTORY/Token] ...[optional: Token]
+```
 
 ## Suggestion-Feature:
 the ability of this plugin is to suggest directories based on your usage history. When providing partial directory names or tokens, the plugin suggests the most relevant directories. To use this feature, add a second word to your cd command. Now the command is considering the words as tokens, and not as path.
@@ -54,13 +57,11 @@ cd proj wordpress
 will change your working directory to '/home/gilber/git-projects/wordpress'. The string 'proj' is imcomplete, but that is okay.
 
 #### how does it work?
-Change the current working directory based on specified options and arguments.
-
-## Usage
-```bash
-cd [OPTION] [DIRECTORY/Token] ...[optional: Token]
-```
-Change the current working directory based on specified options and arguments.
+The plugin creates a file in where it stores the history of cd-operations.
+Each entry contains the path, the path rating and the list time cd'ing there.
+- it creates a new entry if the directory is not stored inside yet
+- it updates the rating (relativ to the current rating and the last time cd'ing there)
+- it deleted the entry if the cd was not succesfull (when the direcory is inaccessible)
 
 ## Options:
 `-L`: Change the logical working directory.
