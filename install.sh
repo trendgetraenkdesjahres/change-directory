@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-if [ -n "$ZSH_CUSTOM" ]; then
+if [ -d "$ZSH_CUSTOM" ]; then
   INSTALL_DIR="$ZSH_CUSTOM/plugins/change-directory"
-elif [ -n "$ZSH" ]; then
+elif [ -d "$ZSH" ]; then
   INSTALL_DIR="$ZSH/plugins/change-directory"
 else
   echo "Uable to get zsh-directory from \$ZSH for cloning the plugin."
