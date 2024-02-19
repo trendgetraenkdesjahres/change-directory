@@ -24,21 +24,19 @@ source "${0:A:h}/init.zsh"
 
 function change-directory() {
   change-directory::init
-  local flags abs_path
+  local help_flag abs_path
 
-  # get the options
-  while getopts "hPL" opt; do
-    case $opt in
-    h) change-directory::show_help && return 0 ;;
-    L) flags+=('logical') ;;
-    P) flags+=('physical') ;;
-    ?) echo "($0): Invalid Option.\n" $(change-directory::show_help) ;;
-    esac
-  done
-
-  # shift the arguments to remove the flags
-  if [ "${flags[*]}" ]; then
-    shift
+  zmodload zsh/zutil
+  zparseopts -D -F -K -- \
+    {h,-help}=help_flag \
+    {c,-config}:=configuration \
+    L=logical \
+    P=physical ||
+    return 1
+  print "logical: $logical, physical: $physical\n"
+  if [ ! -z "$help_flag" ]; then
+    change-directory::show_help
+    return 0
   fi
 
   # it the first argument contains slashes, the input is considered a path. any other argument will be ignored
@@ -59,7 +57,7 @@ function change-directory() {
     abs_path="$(directory::realpath $1)"
   fi
   # execute build-in cd with calculated path and update the information about the path or forget the info about the path on fail
-  \cd "$abs_path" && directory::update "$abs_path" || directory::forget "$abs_path"
+  \cd "$logical" "$physical" "$abs_path" && directory::update "$abs_path" || directory::forget "$abs_path"
 
   echo "Now in: $(pwd)"
 }
