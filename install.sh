@@ -15,7 +15,7 @@ echo "Installing change-directory plugin..."
 mkdir -p "$INSTALL_DIR"
 
 # Clone the repository
-git clone https://github.com/trendgetraenkdesjahres/change-directory/main "$INSTALL_DIR"
+git clone -b main https://github.com/trendgetraenkdesjahres/change-directory.git "$INSTALL_DIR"
 
 echo "Change-directory plugin installed successfully!"
 
