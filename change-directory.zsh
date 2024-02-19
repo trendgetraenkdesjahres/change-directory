@@ -56,7 +56,7 @@ function change-directory() {
     abs_path="$(directory::realpath $1)"
   fi
   # execute build-in cd with calculated path and update the information about the path or forget the info about the path on fail
-  \cd "$logical" "$physical" "$abs_path" && directory::update "$abs_path" || directory::forget "$abs_path"
+  \cd "$abs_path" && directory::update "$abs_path" || directory::forget "$abs_path"
 
   echo "Now in: $(pwd)"
 }
