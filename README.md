@@ -3,7 +3,7 @@ This Zsh plugin, **`change-directory`**, enhances the built-in cd command by sma
 
 ## Installation
 ### Using Curl
-To install the **`change-directory`** plugin, you can use the following one-liner with **`curl`**:
+To install the **`change-directory`** plugin to your defined **custom-zsh folder**, you can use the following one-liner with **`curl`**:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/change-directory/main/install.zsh | zsh
 ```
