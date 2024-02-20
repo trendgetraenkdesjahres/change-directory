@@ -72,14 +72,24 @@ function change-directory() {
   echo "Now in: $(pwd)"
 }
 
+#######################################
+# change-directory::show_help
+# Description:
+#   Display help information for the change-directory function.
+#######################################
 function change-directory::show_help() {
   echo "Usage: change-directory [OPTIONS] [PATH]"
   echo "Change the current working directory based on specified options and arguments."
-  echo "Options:"
-  echo "  -h, --help    Show this help message."
-  echo "  -L            Change the logical working directory."
-  echo "  -P            Change the physical working directory."
-  echo "Arguments:"
-  echo "  PATH          If it contains slashes, it is considered a path. If not, it is considered as token."
-  echo "                If there are multiple arguments, they are considered as tokens for constructing a path."
+
+  echo -e "\nOptions:"
+  echo "  -h, --help           Show this help message."
+  echo "  -L                   Change the logical working directory."
+  echo "  -P                   Change the physical working directory."
+  echo "  -c, --config CONFIG  Specify a configuration file (default: ~/.zshrc)."
+  echo "  -l, --list           Display a list of directories along with their rating and last access timestamp."
+  echo "  -v, --verbose        Enable verbose mode."
+
+  echo -e "\nArguments:"
+  echo "  PATH                 If it is the onnly argument, it is considered a path."
+  echo "                       If there are multiple arguments, they are considered as tokens for constructing a path."
 }

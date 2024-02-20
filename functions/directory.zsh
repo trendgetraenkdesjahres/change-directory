@@ -75,6 +75,20 @@ directory::realpath() {
   echo $directory
 }
 
+#######################################
+# directory::show_list
+# Description:
+#   Display a list of directories along with their rating and last access timestamp.
+# Globals:
+#   HOME : The user's home directory.
+#   _directory_file : The file containing directory information.
+# Arguments:
+#   $1 : tokens - Tokens to filter directories in the list (optional).
+# Outputs:
+#   Echoes a formatted list of directories, their rating, and last access timestamp.
+# Returns:
+#   0 - Successful execution.
+#######################################
 directory::show_list() {
   typeset -r _directory_file="${HOME}/.cache/zsh-cd-history"
   # get the tokens param
