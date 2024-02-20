@@ -77,19 +77,25 @@ directory::realpath() {
 
 directory::show_list() {
   typeset -r _directory_file="${HOME}/.cache/zsh-cd-history"
-  local tokens=($1)
+  # get the tokens param
+  local tokens=()
+  read -r -A tokens <<<"$1"
 
-  # no argument, show whole file
+  # current working dir
+  local current_location=$(pwd)
+
+  # regex
+  regex=$(
+    IFS=\|
+    echo "${tokens[*]}"
+  )
+
+  # when argument, show whole file
   if [[ -z $tokens ]]; then
-    echo $(sort -k2 -nr "$_directory_file" | column -t -s ' ')
-    return 0
+    list=$(sort -k2 -nr "$_directory_file")
+  else
+    list=$(grep -E --color=always "($regex)" "${_directory_file}")
   fi
-
-  # get matches starting of globally and sort by rating
-  list=$(grep -E --color=always "${tokens[*]}" "${_directory_file}" | sort -k2 -nr | column -t -s ' ')
-  if [[ -n ${list} ]]; then
-    echo "$from_root_dir" | awk 'NR==1 {print $1}'
-    return 0
-  fi
-  return 1
+  echo $list | sort -k2 -nr | awk 'BEGIN {print "Directory Rating Date"} {print $1, $2, strftime("%Y-%m-%d %H:%M:%S", $3)}' | column -t -s ' '
+  return 0
 }

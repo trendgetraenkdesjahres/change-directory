@@ -38,14 +38,17 @@ function change-directory() {
     return 1
 
   if [ -n "$help_flag" ]; then
-    return $(change-directory::show_help)
+    change-directory::show_help
+    return 0
   fi
+
+  local tokens=$@
 
   # show the list of directories, search by tokens
   if [ -n "$list_flag" ]; then
-    return $(directory::show_list "$tokens")
+    directory::show_list $tokens
+    return 0
   fi
-  local tokens=$@
 
   # it the first argument contains slashes, the input is considered a path. any other argument will be ignored
   if [[ "$1" == *"/"* ]]; then
