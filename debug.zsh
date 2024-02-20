@@ -16,8 +16,8 @@
 #######################################
 debug::echo() {
   local message=$1
-  if [ -n "$verbose" || -n "$debug" ]; then
-    print "v: '$message' [ by ${funcstack[-1]}() in '${funcfiletrace[1]}' ]"
+  if [[ -n "$verbose" || -n "$debug" ]]; then
+    print "v: ${funcstack[2]}()\t\"$message\" [in '${funcfiletrace[1]}']"
   fi
 }
 
@@ -39,6 +39,6 @@ debug::echo() {
 debug::log() {
   local message=$1
   if [ -n "$debug" ]; then
-    print "$(date +%d.%m.%y-%H:%M:%S)\t'$message' [ by ${funcstack[-1]}() in '${funcfiletrace[1]}' ]" >>"$(dirname "${funcfiletrace[1]}")/debug.log"
+    print "$(date +%d.%m.%y-%H:%M:%S) ${funcstack[2]}()\t\"$message\" [in '${funcfiletrace[1]}']" >>"$(dirname "${funcfiletrace[1]}")/debug.log"
   fi
 }
