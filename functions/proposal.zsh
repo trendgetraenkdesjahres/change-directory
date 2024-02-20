@@ -1,3 +1,19 @@
+#######################################
+# proposal::get
+# Description:
+#   Retrieve a proposed directory based on provided tokens and current location.
+# Globals:
+#   HOME : The user's home directory.
+#   _directory_file : The file containing directory information.
+# Arguments:
+#   $1 : tokens - Tokens to filter directories (optional).
+# Outputs:
+#   Echoes the proposed directory.
+# Returns:
+#   0 - Successful execution.
+#   1 - No directory found or invalid input.
+#######################################
+
 function proposal::get() {
   typeset -r _directory_file="${HOME}/.cache/zsh-cd-history"
   # get the tokens param
