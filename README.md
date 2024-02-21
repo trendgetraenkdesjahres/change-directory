@@ -79,6 +79,7 @@ Each entry contains the path, the path rating and the last time cd'ing there.
  -  [ ] verbose mode
  -  [ ] if more than one token, should proposal also actively search for paths if nothing is found in the _cd_history_file?
  -  [ ] zsh completion
+ -  [ ] refactor options and proposals (modular). add implement order into show_list
 
 # About
 The development of this plugin was a code challenge and an exercise in learning more about writing bash/zsh scripts. The plugin drew inspiration from [Zsh-z]([text](https://github.com/agkozak/zsh-z)), a tool I admired even though I never used it. I was initially hesitant to tinker with the cd command, but I wanted to try implementing a similar concept myself.
