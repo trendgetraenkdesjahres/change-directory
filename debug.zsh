@@ -42,3 +42,25 @@ debug::log() {
     print "$(date +%d.%m.%y-%H:%M:%S) ${funcstack[2]}()\t\"$message\" [in '${funcfiletrace[1]}']" >>"$(dirname "${funcfiletrace[1]}")/debug.log"
   fi
 }
+
+#######################################
+# debug::die
+# Description:
+#   Echo a verbose message with function and file information if verbose or debugging is enabled.
+# Globals:
+#   verbose : Indicates whether verbose mode is enabled.
+#   debug : Indicates whether debugging is enabled.
+#   funcstack : The function call stack.
+#   funcfiletrace : The file trace of the current function.
+# Arguments:
+#   $1 : message - The verbose message to echo.
+# Outputs:
+#   Echoes the verbose message if verbose or debugging is enabled.
+# Returns:
+#   None
+#######################################
+debug::die() {
+  debug::echo $1
+  exit 0
+  return 0
+}
