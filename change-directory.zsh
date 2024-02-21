@@ -4,6 +4,8 @@ source "${0:A:h}/functions/rating.zsh"
 source "${0:A:h}/functions/proposal.zsh"
 source "${0:A:h}/debug.zsh"
 source "${0:A:h}/init.zsh"
+
+change-directory::init
 #######################################
 # change-directory
 # Description:
@@ -24,27 +26,42 @@ source "${0:A:h}/init.zsh"
 #######################################
 
 function change-directory() {
-  change-directory::init
-  local help_flag list_flag abs_path
+  local help_flag list_flag abs_path set_option_value
 
   zmodload zsh/zutil
   zparseopts -D -F -K -- \
     {h,-help}=help_flag \
     {c,-config}:=configuration \
+    -set-:=set_option_value \
     {l,-list}=list_flag \
     {v,-verbose}=verbose \
     L=logical \
     P=physical ||
     return 1
 
+  # call help printer
   if [ -n "$help_flag" ]; then
     change-directory::show_help
     return 0
   fi
 
+  # call options setter
+  if [ -n "$set_option_value" ]; then
+    # remove the flag
+    set_option_value=${set_option_value#--set-}
+
+    # if not using '=' to assign value
+    if [[ "$set_option_value" != *"="* ]]; then
+      change-directory::set_option ${set_option_value%%=*} $1
+    else
+      change-directory::set_option ${set_option_value%%=*} ${set_option_value#*=}
+    fi
+    return 0
+  fi
+
   local tokens=$@
 
-  # show the list of directories, search by tokens
+  # call history list printer
   if [ -n "$list_flag" ]; then
     directory::show_list $tokens
     return 0
@@ -73,6 +90,40 @@ function change-directory() {
 }
 
 #######################################
+# change-directory::set_option
+# Description:
+#   Set the value for a specified option in the change-directory settings.
+# Globals:
+#   _cd_settings : Global array containing change-directory settings.
+#   funcfiletrace : The file trace of the current function.
+# Arguments:
+#   $1 : option_name - The name of the option to set.
+#   $2 : new_value - The new value for the specified option.
+# Outputs:
+#   Echoes the updated change-directory settings array.
+# Returns:
+#   0 - Successful execution.
+#######################################
+function change-directory::set_option() {
+  local option_name=${1##[[:space:]]}
+  local new_value=${2##[[:space:]]}
+
+  if [[ -n $_cd_settings[$option_name] ]]; then
+
+    # store in global var
+    _cd_settings[$option_name]=$new_value
+
+    # store in file
+    sed -i "s/^$option_name=.*/$option_name=$new_value/" "$(dirname ${funcfiletrace[1]})/config"
+  else
+    echo "The option '$option_name' does not exist."
+  fi
+
+  echo ${_cd_settings[*]}
+  return 0 # Success
+}
+
+#######################################
 # change-directory::show_help
 # Description:
 #   Display help information for the change-directory function.
@@ -82,14 +133,16 @@ function change-directory::show_help() {
   echo "Change the current working directory based on specified options and arguments."
 
   echo -e "\nOptions:"
-  echo "  -h, --help           Show this help message."
-  echo "  -L                   Change the logical working directory."
-  echo "  -P                   Change the physical working directory."
-  echo "  -c, --config CONFIG  Specify a configuration file (default: ~/.zshrc)."
-  echo "  -l, --list           Display a list of directories along with their rating and last access timestamp."
-  echo "  -v, --verbose        Enable verbose mode."
+  echo "  -h, --help                   Show this help message."
+  echo "  -L                           Change the logical working directory."
+  echo "  -P                           Change the physical working directory."
+  echo "  -P                           Change the physical working directory."
+  echo "  --set-<option> <value>       Change an option."
+  echo "  -c, --config CONFIG          Specify a configuration file (default: ~/.zshrc)."
+  echo "  -l, --list                   Display a list of directories along with their rating and last access timestamp."
+  echo "  -v, --verbose                Enable verbose mode."
 
   echo -e "\nArguments:"
-  echo "  PATH                 If it is the onnly argument, it is considered a path."
-  echo "                       If there are multiple arguments, they are considered as tokens for constructing a path."
+  echo "  PATH                         If it is the onnly argument, it is considered a path."
+  echo "                               If there are multiple arguments, they are considered as tokens for constructing a path."
 }

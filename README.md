@@ -69,15 +69,15 @@ Each entry contains the path, the path rating and the last time cd'ing there.
 `-h`: Display help and exit.
 
 # Agenda
- -  [ ] when loaded as a plugin, the _directory_file variable doesn't work.
+ -  [ ] when loaded as a plugin, the _cd_history_file variable doesn't work.
  -  [ ] why was there an empty path in the file?
  -  [ ] "cd" should lead to home.
  -  [ ] logic for only one token - when proposal, when error?
  -  [ ] improve "Now in: $dir" message, possibly with ls?
- -  [ ] config-file/ config option/ flag
+ -  [x] config-file/ config option/ flag
  -  [x] show history list
  -  [ ] verbose mode
- -  [ ] if more than one token, should proposal also actively search for paths if nothing is found in the _directory_file?
+ -  [ ] if more than one token, should proposal also actively search for paths if nothing is found in the _cd_history_file?
  -  [ ] zsh completion
 
 # About
