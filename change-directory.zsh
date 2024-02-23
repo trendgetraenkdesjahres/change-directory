@@ -1,11 +1,13 @@
-alias cd='change-directory'
+
 source "${0:A:h}/functions/directory.zsh"
 source "${0:A:h}/functions/rating.zsh"
 source "${0:A:h}/functions/proposal.zsh"
 source "${0:A:h}/debug.zsh"
 source "${0:A:h}/init.zsh"
 
+# initialize global vars, cd-alias and files for plugin
 change-directory::init
+
 #######################################
 # change-directory
 # Description:

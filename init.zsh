@@ -1,4 +1,34 @@
 change-directory::init() {
+
+  # define deps
+  dependencies=(
+    awk
+    bc
+    column
+    date
+    grep
+    readlink
+    sed
+    sort
+  )
+
+  # check deps and abort init if fail
+  for dependency in ${dependencies}; do
+    if ! command -v $dependency &> /dev/null ; then
+      echo "ZSH Plugin change-directory error: Dependency '${dependency}' missing.\n"
+
+      # just to be sure
+      if [[ $(alias cd) == "cd=change-directory" ]]; then
+        unalias cd
+      fi
+      return 1
+      exit 1
+    fi
+  done
+
+  # set cd alias
+  alias cd='change-directory'
+
   # define path for history file
   typeset -gr _cd_history_file="${HOME}/.cache/zsh-cd-history"
 
